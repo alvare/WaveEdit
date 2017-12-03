@@ -96,13 +96,16 @@ void catalogInit() {
 
 			int length;
 			float *samples = loadAudio(filePath, &length);
+
 			if (samples) {
-				if (length == WAVE_LEN) {
-					memcpy(catalogFile.samples, samples, sizeof(float) * WAVE_LEN);
+				if (length == WAVE_LEN*2) {
+					for (int k = 0; k < WAVE_LEN; k++){
+						catalogFile.samples[k] = samples[k*2];
+					}
 					catalogCategory.files.push_back(catalogFile);
 				}
 				else {
-					printf("%s has length %d but needs %d\n", filePath, length, WAVE_LEN);
+					printf("%s has length %d but needs %d\n", filePath, length, WAVE_LEN*2);
 				}
 				delete[] samples;
 			}
